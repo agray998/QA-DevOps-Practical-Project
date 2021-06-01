@@ -1,5 +1,5 @@
 from application import app, db
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
 from application.models import Events
 import requests
 from datetime import date
@@ -14,5 +14,6 @@ def home():
     event = Events(name = event_name.text, units = unit_type.text, effect = effect.text, date_generated = date.today())
     db.session.add(event)
     db.session.commit()
-    return render_template('index.html')
+    past5 = Events.query.order_by(Events.date_generated.desc()).limit(5).all()
+    return render_template('index.html', event = event, past5 = past5)
 
