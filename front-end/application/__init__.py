@@ -9,3 +9,5 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://root:{password}@events
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+from application import routes
