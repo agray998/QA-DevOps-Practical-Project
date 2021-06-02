@@ -11,21 +11,21 @@ services:
         source: ./nginx.conf
         target: /etc/nginx/nginx.conf
   front-end:
-    container_name: front_end
+    container_name: front-end
     image: front-end:latest
     build: ./front-end
     environment:
       PASSWORD: ${password}
   name-api:
-    container_name: name_api
+    container_name: name-api
     image: name-api:latest
     build: ./name-api
   unit-api:
-    container_name: unit_api
+    container_name: unit-api
     image: unit-api:latest
     build: ./unit-api
   effect-api:
-    container_name: effect_api
+    container_name: effect-api
     image: effect-api:latest
     build: ./effect-api
   db:
