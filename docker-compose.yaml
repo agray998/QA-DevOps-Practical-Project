@@ -15,7 +15,7 @@ services:
     image: front-end:latest
     build: ./front-end
     environment:
-      PASSWORD: ${password}
+      - PASSWORD
   name-api:
     container_name: name-api
     image: name-api:latest
@@ -33,4 +33,4 @@ services:
     image: eventsdb:latest
     build: ./events-db
     environment:
-      MYSQL_ROOT_PASSWORD: ${password}
+      - MYSQL_ROOT_PASSWORD
