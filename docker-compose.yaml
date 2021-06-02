@@ -11,7 +11,7 @@ services:
         source: ./nginx/nginx.conf
         target: /etc/nginx/nginx.conf
   front-end:
-    container_name: front-end
+    container_name: front_end
     image: front-end:latest
     build: ./front-end
     environment:
