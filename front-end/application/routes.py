@@ -6,7 +6,7 @@ from datetime import date
 
 
 # home route
-@app.route('/home', methods = ['GET'])
+@app.route('/', methods = ['GET'])
 def home():
     event_name = requests.get('http://name_api:5000/get_name')
     unit_type = requests.get('http://unit_api:5000/get_unit')
