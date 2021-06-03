@@ -3,8 +3,6 @@ services:
   nginx:
     container_name: nginx
     image: nginx:alpine
-    depends_on:
-      - "front-end"
     ports:
       - target: 80
         published: 80
@@ -16,8 +14,6 @@ services:
     container_name: front-end
     image: front-end:latest
     build: ./front-end
-    depends_on:
-      - "eventsdb"
     environment:
       PASSWORD: ${MYSQL_ROOT_PASSWORD}
   name-api:

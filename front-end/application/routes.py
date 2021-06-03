@@ -14,6 +14,11 @@ def home():
     event = Events(event_name = event_name.text, unit_type = unit_type.text, status_effect = effect.text, date_generated = date.today())
     db.session.add(event)
     db.session.commit()
-    past5 = Events.query.order_by(Events.date_generated.desc()).limit(5).all()
+    past5 = Events.query.order_by(Events.id.desc()).limit(5).all()
     return render_template('index.html', event = event, past5 = past5)
+
+@app.route('/history', methods=['GET'])
+def history():
+    events_history = Events.query.all()
+    return render_template('history.html', events_history = events_history)
 
