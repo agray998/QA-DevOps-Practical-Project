@@ -7,4 +7,4 @@ class Events(db.Model):
     status_effect = db.Column(db.String(50))
     date_generated = db.Column(db.DateTime)
     def __repr__(self):
-        return f"{self.name}: {self.units} units experience {self.effect}"
+        return f"{self.event_name}: {self.unit_type} units experience {self.status_effect}"
