@@ -2,6 +2,7 @@ from flask import url_for
 from flask_testing import TestCase
 from datetime import date
 import requests_mock
+import pytest
 # import the app's classes and objects
 from application import app, db
 from application.models import Events
