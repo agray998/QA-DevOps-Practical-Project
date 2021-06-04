@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h2> History </h2>
+<br>
+{% for event in events_history %}
+{{ event }} {{ event.date_generated }}
+<br>
+{% endfor %}
+{% endblock body %}

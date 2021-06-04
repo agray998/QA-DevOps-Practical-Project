@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h2> Home </h2>
+<br>
+<h3> This Event: </h3>
+<br>
+{{ event }}
+<br>
+<h3> Last 5 Events: </h3>
+<br>
+{% for events in past5 %}
+{{ events }}
+<br>
+{% endfor %}
+{% endblock body %}
+
