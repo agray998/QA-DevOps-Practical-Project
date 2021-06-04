@@ -12,25 +12,25 @@ services:
         target: /etc/nginx/nginx.conf
   front-end:
     container_name: front-end
-    image: front-end:latest
+    image: agray998/front-end:latest
     build: ./front-end
     environment:
       PASSWORD: ${MYSQL_ROOT_PASSWORD}
   name-api:
     container_name: name-api
-    image: name-api:latest
+    image: agray998/name-api:latest
     build: ./name-api
   unit-api:
     container_name: unit-api
-    image: unit-api:latest
+    image: agray998/unit-api:latest
     build: ./unit-api
   effect-api:
     container_name: effect-api
-    image: effect-api:latest
+    image: agray998/effect-api:latest
     build: ./effect-api
   eventsdb:
     container_name: eventsdb
-    image: eventsdb:latest
+    image: agray998/eventsdb:latest
     build: ./events-db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
