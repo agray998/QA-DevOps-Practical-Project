@@ -4,7 +4,6 @@ from unittest.mock import patch
 import pytest
 # import the app's classes and objects
 from application import app
-from application.routes.get_effect import get_effect
 
 # Create the base class
 class TestBase(TestCase):
