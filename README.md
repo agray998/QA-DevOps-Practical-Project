@@ -33,6 +33,7 @@ This project utilises a full CI/CD pipeline to test, build, deploy and maintain 
 * Development environment
 * CI server
 * Deployment environment  
+
 Project tracking was done using Trello. Tasks were assigned story points, acceptance criteria and a MoSCoW prioritisation and moved through the stages from project backlog to complete as the project progressed. 
 img here
 link here
