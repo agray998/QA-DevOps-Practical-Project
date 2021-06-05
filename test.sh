@@ -1,6 +1,6 @@
 #!/bin/bash
 declare -a directories=("front-end" "name-api" "unit-api" "effect-api")
-for dir in "${directories}"
+for dir in "${directories[@]}"
 do
   cd ${dir}
   sudo apt-get update
