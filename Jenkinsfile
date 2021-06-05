@@ -25,6 +25,6 @@ pipeline {
     }
     post {
         junit '**/*.xml'
-        cobertura coberturaReportFile: 'coverage.xml' failNoReports: false
+        cobertura coberturaReportFile: 'coverage.xml', failNoReports: false
     }
 }
