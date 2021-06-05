@@ -24,7 +24,8 @@ In response to this brief, I have chosen to develop a strategy game random event
 * Unit API (service 3): This service receives HTTP GET requests from service 1, and responds with a randomly selected unit type chosen from: [list here]
 * Effect API (service 4): This service receives HTTP POST requests from service 1, which provide the randomly generated event names and unit types as JSON objects, service 4 has two dictionaries which use this data to determine the status effect associated with the event; the event name determines the magnitude of the status effect and the unit type determines which of the units' statistics are affected.
 
-In addition to these main services, a reverse proxy using NGINX was implemented; the NGINX service listens to port 80 on the host machine and performs a proxy pass, directing traffic from port 80 on the host to port 5000 on the front-end container, where the app is accessible. The images below show the front-end in action:
+In addition to these main services, a reverse proxy using NGINX was implemented; the NGINX service listens to port 80 on the host machine and performs a proxy pass, directing traffic from port 80 on the host to port 5000 on the front-end container, where the app is accessible. The images below show the front-end in action:  
+
 ![front-end-home](https://i.imgur.com/imVhUta.png) ![front-end-history](https://i.imgur.com/MugpPxv.png)
 
 ## CI/CD Pipeline:
@@ -45,4 +46,7 @@ img here
 The development environment used was a virtual machine, hosted on GCP, accessed via VSCode. 
 
 Jenkins was used as a CI server. In response to a github webhook, Jenkins cloned down the repo and executed the pipeline script defined in the Jenkinsfile. This pipeline consists of 3 stages: test, build/push and deploy. The test stage executes a bash script which cycles through the directories for the four services and runs the tests using pytest. If the tests are successful, the build/push stage uses docker-compose to build the images for the different services, logs into docker using credentials configured on the Jenkins VM, and then pushes the images to Dockerhub. Finally, the deploy stage deploys the application, initially for development purposes this was done via docker-compose on the Jenkins machine, however the production-ready deployment uses docker swarm to deploy the application across three nodes (one manager and two workers). The result of this pipeline is shown below:  
-![jenks-pipeline](https://i.imgur.com/fb2pdpw.png)
+
+![jenks-pipeline](https://i.imgur.com/fb2pdpw.png)  
+
+Successful stages are shown in green, whilst failed stages are shown in red. As can be seen, if one stage fails all future stages are skipped, thus the images will only be built and pushed to Dockerhub if the unit tests pass, and the app will only be redeployed if the updated images are accessible from Dockerhub.
