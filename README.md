@@ -37,8 +37,8 @@ This project utilises a full CI/CD pipeline to test, build, deploy and maintain 
 * Deployment environment  
 
 Project tracking was done using Trello. Tasks were assigned story points, acceptance criteria and a MoSCoW prioritisation and moved through the stages from project backlog to complete as the project progressed. 
-img here
-link here
+![trello-board](https://i.imgur.com/hNSLsh4.png)
+[here](https://trello.com/b/75rHr6yu/practical-project)
 
 Git was used for version control, with the repository hosted on github. A feature-branch model was implemented in this project to insulate the stable version of the application from ongoing development. The branch structure was as follows:  
 img here
