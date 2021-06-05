@@ -47,6 +47,6 @@ The development environment used was a virtual machine, hosted on GCP, accessed 
 
 Jenkins was used as a CI server. In response to a github webhook, Jenkins cloned down the repo and executed the pipeline script defined in the Jenkinsfile. This pipeline consists of 3 stages: test, build/push and deploy. The test stage executes a bash script which cycles through the directories for the four services and runs the tests using pytest. If the tests are successful, the build/push stage uses docker-compose to build the images for the different services, logs into docker using credentials configured on the Jenkins VM, and then pushes the images to Dockerhub. Finally, the deploy stage deploys the application, initially for development purposes this was done via docker-compose on the Jenkins machine, however the production-ready deployment uses docker swarm to deploy the application across three nodes (one manager and two workers). The result of this pipeline is shown below:  
 
-![jenks-pipeline](https://i.imgur.com/fb2pdpw.png)  
+![jenks-pipeline](https://i.imgur.com/OpWUXyQ.png) 
 
 Successful stages are shown in green, whilst failed stages are shown in red. As can be seen, if one stage fails all future stages are skipped, thus the images will only be built and pushed to Dockerhub if the unit tests pass, and the app will only be redeployed if the updated images are accessible from Dockerhub.
