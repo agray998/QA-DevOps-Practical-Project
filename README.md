@@ -24,7 +24,8 @@ In response to this brief, I have chosen to develop a strategy game random event
 * Unit API (service 3): This service receives HTTP GET requests from service 1, and responds with a randomly selected unit type chosen from: [list here]
 * Effect API (service 4): This service receives HTTP POST requests from service 1, which provide the randomly generated event names and unit types as JSON objects, service 4 has two dictionaries which use this data to determine the status effect associated with the event; the event name determines the magnitude of the status effect and the unit type determines which of the units' statistics are affected.
 
-In addition to these main services, a reverse proxy using NGINX was implemented; the NGINX service listens to port 80 on the host machine and performs a proxy pass, directing traffic from port 80 on the host to port 5000 on the front-end container, where the app is accessible.  
+In addition to these main services, a reverse proxy using NGINX was implemented; the NGINX service listens to port 80 on the host machine and performs a proxy pass, directing traffic from port 80 on the host to port 5000 on the front-end container, where the app is accessible. The images below show the front-end in action:
+![front-end-home](https://i.imgur.com/imVhUta.png) ![front-end-history](https://i.imgur.com/MugpPxv.png)
 
 ## CI/CD Pipeline:
 This project utilises a full CI/CD pipeline to test, build, deploy and maintain the application. The major components of this pipeline are:
