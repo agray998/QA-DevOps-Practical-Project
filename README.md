@@ -49,8 +49,16 @@ img here
 
 The development environment used was a virtual machine, hosted on GCP, accessed via VSCode. 
 
-Jenkins was used as a CI server. In response to a github webhook, Jenkins cloned down the repo and executed the pipeline script defined in the Jenkinsfile. This pipeline consists of 3 stages: test, build/push and deploy. The test stage executes a bash script which cycles through the directories for the four services and runs unit tests using pytest. The front-end and all APIs had unit tests written to test all areas of functionality. To test the HTTP requests made by the front-end, requests_mock was used to simulate responses from the APIs. To test the functionality of the APIs themselves, the random.choice function was patched with unittest.mock to ensure reproducible test performance. If the tests are successful, the build/push stage uses docker-compose to build the images for the different services, logs into docker using credentials configured on the Jenkins VM, and then pushes the images to Dockerhub. Finally, the deploy stage deploys the application, initially for development purposes this was done via docker-compose on the Jenkins machine, however the production-ready deployment uses docker swarm to deploy the application across three nodes (one manager and two workers). The result of this pipeline is shown below:  
+Jenkins was used as a CI server. In response to a github webhook, Jenkins cloned down the repo and executed the pipeline script defined in the Jenkinsfile. This pipeline consists of 4 main stages: test, build/push,deploy and post-build actions. The test stage executes a bash script which cycles through the directories for the four services and runs unit tests using pytest. The front-end and all APIs had unit tests written to test all areas of functionality. To test the HTTP requests made by the front-end, requests_mock was used to simulate responses from the APIs. To test the functionality of the APIs themselves, the random.choice function was patched with unittest.mock to ensure reproducible test performance. If the tests are successful, the build/push stage uses docker-compose to build the images for the different services, logs into docker using credentials configured on the Jenkins VM, and then pushes the images to Dockerhub. The deploy stage deploys the application, initially for development purposes this was done via docker-compose on the Jenkins machine, however the production-ready deployment uses docker swarm to deploy the application across three nodes (one manager and two workers). Finally, in the post-build stage, the j-unit and cobertura test reports are published. The result of this pipeline is shown below:  
 
-![Jenks-pipeline](https://i.imgur.com/eUYHXy0.png)
+![Jenks-pipeline](https://i.imgur.com/wXi0QuL.png)
 
-Successful stages are shown in green, whilst failed stages are shown in red. As can be seen, if one stage fails all future stages are skipped, thus the images will only be built and pushed to Dockerhub if the unit tests pass, and the app will only be redeployed if the updated images are accessible from Dockerhub.
+Successful stages appear green, unstable builds are indicated by yellow stages, and failures are indicated via red stages. If a stage fails, later stages will be skipped, preventing failed versions from being deployed, this can be seen here:  
+
+![pipeline-w-failure](https://i.imgur.com/eUYHXy0.png)
+
+The results of the tests are published in xml format using j-unit and cobertura, these reports show percent code coverage as well as trends in test results over time:  
+
+![cov-report](https://i.imgur.com/Iz5vh4z.png)
+
+As can be seen here, 100% coverage was achieved for all tests; this ensured that all of the functions of the app worked exactly as intended.
