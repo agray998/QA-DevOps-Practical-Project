@@ -28,6 +28,8 @@ In addition to these main services, a reverse proxy using NGINX was implemented;
 
 ![front-end-home](https://i.imgur.com/imVhUta.png) ![front-end-history](https://i.imgur.com/MugpPxv.png)
 
+The first image shows the home page, this was originally the only route the front end had, to make the page more readable a history page was added to display the full history of generated events, so the home page could be limited to just the current event and the five most recent events; this history page is shown in the second image above.
+
 ## CI/CD Pipeline:
 This project utilises a full CI/CD pipeline to test, build, deploy and maintain the application. The major components of this pipeline are:
 * Project tracking
