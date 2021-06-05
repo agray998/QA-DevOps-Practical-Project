@@ -26,7 +26,10 @@ pipeline {
     post {
         always {
             junit '**/*.xml'
-            cobertura coberturaReportFile: 'coverage.xml', failNoReports: false
+            cobertura coberturaReportFile: 'front-end/coverage.xml', failNoReports: false
+            cobertura coberturaReportFile: 'name-api/coverage.xml', failNoReports: false
+            cobertura coberturaReportFile: 'unit-api/coverage.xml', failNoReports: false
+            cobertura coberturaReportFile: 'effect-api/coverage.xml', failNoReports: false
         }
     }
 }
