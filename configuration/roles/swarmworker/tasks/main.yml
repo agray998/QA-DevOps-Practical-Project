@@ -4,6 +4,6 @@
 - name: "Add Workers to the Swarm"
   docker_swarm:
     state: join
-    advertise_addr: "{{ ansible_facts['ansible_default_ipv4']['address'] }}"
+    advertise_addr: "{{ ansible_facts['ansible_all_ipv4_addresses'][0] }}"
     join_token: "{{ hostvars['swarm-master']['info']['swarm_facts']['JoinTokens']['Worker'] }}"
     remote_addrs: [ 'swarm-master:2377' ]
