@@ -6,7 +6,6 @@ all:
     workers:
       hosts:
         swarm-worker:
-        swarm-worker2:
         
   vars:
     ansible_user: jenkins
