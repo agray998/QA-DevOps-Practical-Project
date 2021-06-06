@@ -61,4 +61,11 @@ The results of the tests are published in xml format using j-unit and cobertura,
 
 ![cov-report](https://i.imgur.com/Iz5vh4z.png)
 
-As can be seen here, 100% coverage was achieved for all tests; this ensured that all of the functions of the app worked exactly as intended.
+As can be seen here, 100% coverage was achieved for all tests; this ensured that all of the functions of the app worked exactly as intended. The use of a Jenkins pipeline, with the stage-by-stage breakdown as above, makes optimisation of the project easier. For example, initially all pip installs, for tests and deployment, were done using one requirements file, which meant that testing modules were being installed when building the images; since this was not necessary and since the build/push stage was the longest stage in the pipeline the requirements were separated into a requirements.txt file, containing only the pip installs needed to run the app, and a test_requirements.txt file, which contained all requirements including testing modules. This eliminated unnecessary pip installs during the build stage and reduced the average build/push time over three pipeline runs from around two-and-a-half minutes to around one minute and fifty seconds, a reduction of around 27%:
+
+| Run | Before separation of pip installs | After separation of pip installs |
+| --- | --------------------------------- | -------------------------------- |
+| 1   | 02:12                             | 01:45                            |
+| 2   | 02:33                             | 01:53                            |
+| 3   | 02:48                             | 01:48                            |
+

@@ -8,9 +8,9 @@ from datetime import date
 # home route
 @app.route('/', methods = ['GET'])
 def home():
-    event_name = requests.get('http://name-api:5000/get_name')
-    unit_type = requests.get('http://unit-api:5000/get_unit')
-    effect = requests.post('http://effect-api:5000/get_effect', json = {"Event": event_name.text, "Unit": unit_type.text})
+    event_name = requests.get('http://event_generator_name-api:5000/get_name')
+    unit_type = requests.get('http://event_generator_unit-api:5000/get_unit')
+    effect = requests.post('http://event_generator_effect-api:5000/get_effect', json = {"Event": event_name.text, "Unit": unit_type.text})
     event = Events(event_name = event_name.text, unit_type = unit_type.text, status_effect = effect.text, date_generated = date.today())
     db.session.add(event)
     db.session.commit()
