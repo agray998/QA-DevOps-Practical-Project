@@ -1,8 +1,10 @@
 ---
 # tasks file for swarmmanager
 #
-- name: swarm init
-  shell: docker swarm init --advertise-addr={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:2377
-- name: get token
-  shell: docker swarm join-token --quiet worker
-  register: worker_token
+- name: "Init swarm"
+  docker_swarm:
+    state: present
+
+- name: "get swarm info"
+  docker_swarm_info:
+  register: info

@@ -2,4 +2,8 @@
 # tasks file for swarmworker
 
 - name: "Add Workers to the Swarm"
-  shell: docker swarm join --token {{ hostvars['swarm-master']['worker_token']['stdout'] }} {{ hostvars['swarm-master']['ansible_default_ipv4']['address'] }}:2377
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ ansible_facts['ansible_default_ipv4']['address'] }}"
+    join_token: "{{ hostvars['swarm-master']['info']['swarm_facts']['JoinTokens']['Worker'] }}"
+    remote_addrs: [ 'swarm-master:2377' ]
