@@ -2,11 +2,11 @@ all:
   children:
     managers:
       hosts:
-        jenkins@swarm-master:
+        swarm-master:
     workers:
       hosts:
-        jenkins@swarm-worker:
-        jenkins@swarm-worker2:
+        swarm-worker:
+        swarm-worker2:
         
   vars:
     ansible_user: jenkins
