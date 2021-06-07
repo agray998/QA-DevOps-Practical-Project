@@ -20,11 +20,17 @@ services:
     container_name: name-api
     image: agray998/name-api:latest
     build: ./name-api
+    deploy:
+      replicas: 3
   unit-api:
     container_name: unit-api
     image: agray998/unit-api:latest
     build: ./unit-api
+    deploy:
+      replicas: 3
   effect-api:
     container_name: effect-api
     image: agray998/effect-api:latest
     build: ./effect-api
+    deploy:
+      replicas: 3

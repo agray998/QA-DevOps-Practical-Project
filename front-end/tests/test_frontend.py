@@ -41,7 +41,7 @@ class TestBase(TestCase):
 
 
 class TestViews(TestBase):
-
+  
     def test_home_get(self):
         # mock values
         name = "Gold Rush"
@@ -60,4 +60,3 @@ class TestViews(TestBase):
         response = self.client.get(url_for('history'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Bountiful Harvest', response.data)
-

@@ -6,4 +6,3 @@ import random
 def name():
     event_name = random.choice(["Bountiful Harvest", "Gold Rush", "Weapons Upgrade"])
     return Response(event_name, mimetype='text/plain')
-
