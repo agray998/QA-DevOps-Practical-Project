@@ -14,23 +14,25 @@ services:
     container_name: front-end
     image: agray998/front-end:latest
     build: ./front-end
+    deploy:
+      replicas: 3
     environment:
       PASSWORD: ${MYSQL_ROOT_PASSWORD}
   name-api:
     container_name: name-api
     image: agray998/name-api:latest
     build: ./name-api
+    deploy:
+      replicas: 3
   unit-api:
     container_name: unit-api
     image: agray998/unit-api:latest
     build: ./unit-api
+    deploy:
+      replicas: 3
   effect-api:
     container_name: effect-api
     image: agray998/effect-api:latest
     build: ./effect-api
-  eventsdb:
-    container_name: eventsdb
-    image: agray998/eventsdb:latest
-    build: ./events-db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    deploy:
+      replicas: 3
