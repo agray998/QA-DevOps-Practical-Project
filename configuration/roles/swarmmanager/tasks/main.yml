@@ -1,0 +1,17 @@
+---
+# tasks file for swarmmanager
+#
+- name: "Init swarm"
+  docker_swarm:
+    state: present
+
+- name: "get swarm info"
+  docker_swarm_info:
+  register: info
+
+- name: "Deploy app"
+  docker_stack:
+    state: present
+    name: event_generator
+    compose:
+      - /home/jenkins/docker-compose.yaml
