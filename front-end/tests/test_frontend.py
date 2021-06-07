@@ -25,7 +25,7 @@ class TestBase(TestCase):
         db.create_all()
 
         # Create test event
-        sample1 = Events(event_name="Blindness", unit_type="Ranged inf.", status_effect="-5 to Range", date_generated=date(2021, 6, 3))
+        sample1 = Events(event_name="Bountiful Harvest", unit_type="Ranged inf.", status_effect="+2 to Range", date_generated=date(2021, 6, 3))
 
         # save event to database
         db.session.add(sample1)
@@ -44,20 +44,20 @@ class TestViews(TestBase):
 
     def test_home_get(self):
         # mock values
-        name = "Plague"
+        name = "Gold Rush"
         unit = "Melee cav."
-        effect = "-10 to Attack strength"
+        effect = "+10 to Attack strength"
         with requests_mock.Mocker() as m:
             m.get("http://event_generator_name-api:5000/get_name", text=name)
             m.get("http://event_generator_unit-api:5000/get_unit", text=unit)
             m.post("http://event_generator_effect-api:5000/get_effect", text=effect)
             response = self.client.get(url_for('home'))
             self.assertEqual(response.status_code, 200)
-            self.assertIn(b'Blindness', response.data)
-            self.assertIn(b'Plague', response.data)
+            self.assertIn(b'Bountiful Harvest', response.data)
+            self.assertIn(b'Gold Rush', response.data)
 
     def test_hist_get(self):
         response = self.client.get(url_for('history'))
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Blindness', response.data)
+        self.assertIn(b'Bountiful Harvest', response.data)
 
