@@ -14,8 +14,6 @@ services:
     container_name: front-end
     image: agray998/front-end:latest
     build: ./front-end
-    deploy:
-      replicas: 3
     environment:
       PASSWORD: ${MYSQL_ROOT_PASSWORD}
   name-api:
