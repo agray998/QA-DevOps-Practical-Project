@@ -19,9 +19,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "ansible-playbook -i configuration/inventory.yaml configuration/playbook.yaml"
                 sh "scp -i ~/.ssh/ansible_id_rsa docker-compose.yaml swarm-master:/home/jenkins/docker-compose.yaml"
-                sh "ssh -i ~/.ssh/ansible_id_rsa jenkins@swarm-master && docker stack deploy --compose-file docker-compose.yaml event_generator"
+                sh "ansible-playbook -i configuration/inventory.yaml configuration/playbook.yaml"
             }
         }
     }

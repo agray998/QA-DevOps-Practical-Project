@@ -48,9 +48,9 @@ class TestViews(TestBase):
         unit = "Melee cav."
         effect = "-10 to Attack strength"
         with requests_mock.Mocker() as m:
-            m.get("http://name-api:5000/get_name", text=name)
-            m.get("http://unit-api:5000/get_unit", text=unit)
-            m.post("http://effect-api:5000/get_effect", text=effect)
+            m.get("http://event_generator_name-api:5000/get_name", text=name)
+            m.get("http://event_generator_unit-api:5000/get_unit", text=unit)
+            m.post("http://event_generator_effect-api:5000/get_effect", text=effect)
             response = self.client.get(url_for('home'))
             self.assertEqual(response.status_code, 200)
             self.assertIn(b'Blindness', response.data)
