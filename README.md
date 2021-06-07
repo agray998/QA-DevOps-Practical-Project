@@ -6,6 +6,7 @@ This repository contains my deliverable for the QA DevOps practical project.
 *  [Project Planning](#Project-Planning)
 *  [App Design](#App-Design)
 *  [CI/CD Pipeline](#CI/CD-Pipeline)
+*  [Future Work](#Future-Work)
 
 ## Project Brief:  
 The brief for this project was to produce an application consisiting of four microservices, which interact with one another to generate objects using some defined logic. This application was to be produced and maintained using a fully automated CI/CD pipeline. The full tech stack required was as follows:  
@@ -40,9 +41,9 @@ The first image shows the home page, this was originally the only route the fron
 
 ![ED](https://i.imgur.com/0dN4mk6.png)
 
-The overall microservice architecture is shown below:
+Currently, the database is stored in an sqlite file, due to issues connecting the app to a MySQL service, the overall microservice architecture is thus:
 
-![Architecture](https://i.imgur.com/W30t1V4.png)
+![Architecture](https://i.imgur.com/42mJcPR.png)
 
 ## CI/CD Pipeline:
 This project utilises a full CI/CD pipeline to test, build, deploy and maintain the application. The major components of this pipeline are:
@@ -59,9 +60,10 @@ Project tracking was done using Trello. Tasks were assigned story points, accept
 For more details, the trello board can be accessed [here](https://trello.com/b/75rHr6yu/practical-project)
 
 Git was used for version control, with the repository hosted on github. A feature-branch model was implemented in this project to insulate the stable version of the application from ongoing development. The branch structure was as follows:  
-img here
 
-The development environment used was a virtual machine, hosted on GCP, accessed via VSCode. 
+![Branch-model](https://i.imgur.com/ZRUkDvL.png)
+
+The development environment used was a Ubuntu virtual machine, hosted on GCP, accessed via VSCode. 
 
 Jenkins was used as a CI server. In response to a github webhook, Jenkins cloned down the repo and executed the pipeline script defined in the Jenkinsfile. This pipeline consists of 4 main stages: test, build/push,deploy and post-build actions. The test stage executes a bash script which cycles through the directories for the four services and runs unit tests using pytest. The front-end and all APIs had unit tests written to test all areas of functionality. To test the HTTP requests made by the front-end, requests_mock was used to simulate responses from the APIs. To test the functionality of the APIs themselves, the random.choice function was patched with unittest.mock to ensure reproducible test performance. The results of the tests are published in xml format using j-unit and cobertura, these reports show percent code coverage as well as trends in test results over time:  
 
@@ -69,15 +71,7 @@ Jenkins was used as a CI server. In response to a github webhook, Jenkins cloned
 
 As can be seen here, 100% coverage was achieved for all tests; this ensured that all of the functions of the app worked exactly as intended.
 
-If the tests are successful, the build/push stage uses docker-compose to build the images for the different services, logs into docker using credentials configured on the Jenkins VM, and then pushes the images to Dockerhub. The deploy stage deploys the application. First the docker-compose.yaml and nginx.conf files are copied to the manager node by secure copy (scp). Then, an ansible playbook is used to run three roles: the first installs docker on the swarm machines if it is not present already and adds jenkins to the docker group, the second initialises a swarm on the manager node and uses the Ansible docker stack module to deploy the application, and the third adds the worker node to the swarm. Finally, in the post-build stage, the j-unit and cobertura test reports are published. The result of this pipeline is shown below:  
-
-![Jenks-pipeline](https://i.imgur.com/wXi0QuL.png)
-
-Successful stages appear green, unstable builds are indicated by yellow stages, and failures are indicated via red stages. If a stage fails, later stages will be skipped, preventing failed versions from being deployed, this can be seen here:  
-
-![pipeline-w-failure](https://i.imgur.com/eUYHXy0.png)
-
- The use of a Jenkins pipeline, with the stage-by-stage breakdown as above, makes optimisation of the project easier. For example, initially all pip installs, for tests and deployment, were done using one requirements file, which meant that testing modules were being installed when building the images; since this was not necessary and since the build/push stage was the longest stage in the pipeline the requirements were separated into a requirements.txt file, containing only the pip installs needed to run the app, and a test_requirements.txt file, which contained all requirements including testing modules. This eliminated unnecessary pip installs during the build stage and reduced the average build/push time over three pipeline runs from around two-and-a-half minutes to around one minute and fifty seconds, a reduction of around 27%:
+If the tests are successful, the build/push stage uses docker-compose to build the images for the different services, logs into docker using credentials configured on the Jenkins VM, and then pushes the images to Dockerhub. The use of a Jenkins pipeline, with this stage-by-stage breakdown, makes optimisation of the project easier. For example, initially all pip installs, for tests and deployment, were done using one requirements file, which meant that testing modules were being installed when building the images; since this was not necessary and since the build/push stage was the longest stage in the pipeline the requirements were separated into a requirements.txt file, containing only the pip installs needed to run the app, and a test_requirements.txt file, which contained all requirements including testing modules. This eliminated unnecessary pip installs during the build stage and reduced the average build/push time over three pipeline runs from around two-and-a-half minutes to around one minute and fifty seconds, a reduction of around 27%:
 
 | Run | Before separation of pip installs | After separation of pip installs |
 | --- | --------------------------------- | -------------------------------- |
@@ -85,5 +79,24 @@ Successful stages appear green, unstable builds are indicated by yellow stages, 
 | 2   | 02:33                             | 01:53                            |
 | 3   | 02:48                             | 01:48                            |
 
+Following the build and push, the deploy stage deploys the application. First the docker-compose.yaml and nginx.conf files are copied to the manager node by secure copy (scp). Then, an ansible playbook is used to run three roles: the first installs docker on the swarm machines if it is not present already and adds jenkins to the docker group, the second initialises a swarm on the manager node and uses the Ansible docker stack module to deploy the application, and the third adds the worker node to the swarm. This creates an overlay network as follows:
+
+![Swarm](https://i.imgur.com/RmMd02R.png)
+
+Finally, in the post-build stage, the j-unit and cobertura test reports are published. The result of this pipeline is shown below:  
+
+![Jenks-pipeline](https://i.imgur.com/wXi0QuL.png)
+
+Successful stages appear green, unstable builds are indicated by yellow stages, and failures are indicated via red stages. If a stage fails, later stages will be skipped, preventing failed versions from being deployed, this can be seen here:  
+
+![pipeline-w-failure](https://i.imgur.com/eUYHXy0.png)
+
+The overall structure of the CI/CD pipeline is:
+
+![CI/CD](https://i.imgur.com/p714e0J.png)
+
+## Known Issues:
+* Due to the use of an sqlite database, data is not persisted between services. Future work would address this as a matter of priority
+
 ## Future Improvements:  
-This app could be improved in future sprints by using a locally hosted Nexus repository to speed up deployment, as the images would then not have to be fetched from Dockerhub, and by using another NGINX service as an external load balancer, to provide a single point of entry to the application.
+The first future improvement would, as mentioned, be the use of a database which can persist data. The app could also be further improved in future sprints by using a locally hosted Nexus repository to speed up deployment, as the images would then not have to be fetched from Dockerhub, and by using another NGINX service as an external load balancer, to provide a single point of entry to the application.
