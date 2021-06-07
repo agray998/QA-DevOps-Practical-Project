@@ -4,7 +4,7 @@
   - dockerinstall
 
 - hosts: managers
-  become: false
+  become: true
   roles:
   - swarmmanager
 
