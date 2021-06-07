@@ -6,6 +6,7 @@ This repository contains my deliverable for the QA DevOps practical project.
 *  [Project Planning](#Project-Planning)
 *  [App Design](#App-Design)
 *  [CI/CD Pipeline](#CI/CD-Pipeline)
+*  [Known Issues](#Known-Issues)
 *  [Future Work](#Future-Work)
 
 ## Project Brief:  
