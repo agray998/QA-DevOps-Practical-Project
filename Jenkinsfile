@@ -10,8 +10,6 @@ pipeline {
             environment {
                 DOCKER_UNAME = credentials('docker_uname')
                 DOCKER_PWORD = credentials('docker_pword')
-                DB_URI = credentials('dburi')
-                DB_PASSWORD = credentials('DB_PASSWORD')
             }
             steps {
                 sh "docker-compose build --parallel"

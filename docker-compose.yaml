@@ -15,7 +15,7 @@ services:
     image: agray998/front-end:latest
     build: ./front-end
     environment:
-      DB_URI: ${DB_URI}
+      PASSWORD: ${MYSQL_ROOT_PASSWORD}
   name-api:
     container_name: name-api
     image: agray998/name-api:latest
@@ -28,9 +28,3 @@ services:
     container_name: effect-api
     image: agray998/effect-api:latest
     build: ./effect-api
-  eventsdb:
-    container_name: eventsdb
-    image: agray998/eventsdb:latest
-    build: ./events-db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
