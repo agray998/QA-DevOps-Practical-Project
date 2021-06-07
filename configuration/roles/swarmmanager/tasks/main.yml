@@ -9,6 +9,10 @@
   docker_swarm_info:
   register: info
 
+- name: "Create Volume"
+  docker_volume:
+    name: event_generator_data
+
 - name: "Deploy app"
   docker_stack:
     state: present

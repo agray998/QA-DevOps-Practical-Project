@@ -1,6 +1,7 @@
 version: "3.8"
 volumes:
-  data:
+  event_generator_data:
+    external: true
 services:
   nginx:
     container_name: nginx
