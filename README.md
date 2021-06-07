@@ -1,6 +1,5 @@
 # QA-DevOps-Practical-Project  
-This repository contains my deliverable for the QA DevOps practical project. wcbewjbcfqewjcbwqejfb
-
+This repository contains my deliverable for the QA DevOps practical project.
 ## Contents:  
 *  [Project Brief](#Project-Brief)
 *  [Project Planning](#Project-Planning)
