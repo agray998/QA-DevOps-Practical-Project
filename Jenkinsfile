@@ -14,6 +14,8 @@ pipeline {
                 DB_PASSWORD = credentials('DB_PASSWORD')
             }
             steps {
+                sh "export DB_URI=$DB_URI"
+                sh "export DB_PASSWORD=$DB_PASSWORD"
                 sh "docker-compose build --parallel"
                 sh "docker login -u $DOCKER_UNAME -p $DOCKER_PWORD"
                 sh "docker-compose push"
