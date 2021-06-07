@@ -14,6 +14,6 @@ class TestBase(TestCase):
 class TestViews(TestBase):
 
     def test_get_effect(self):
-        response = self.client.post(url_for('effect'), json={"Event": "Blindness", "Unit": "Ranged inf."})
+        response = self.client.post(url_for('effect'), json={"Event": "Weapons Upgrade", "Unit": "Ranged inf."})
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'-5 to Range', response.data)
+        self.assertIn(b'+10 to Range', response.data)
