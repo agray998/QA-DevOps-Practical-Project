@@ -94,7 +94,7 @@ Successful stages appear green, unstable builds are indicated by yellow stages, 
 
 The overall structure of the CI/CD pipeline is:
 
-![CI/CD](https://i.imgur.com/p714e0J.png)
+![CI/CD](https://i.imgur.com/OCDefsv.png)
 
 ## Known Issues:
 * Due to the use of an sqlite database, data is not persisted between services. Future work would address this as a matter of priority
