@@ -1,7 +1,4 @@
 version: "3.8"
-volumes:
-  event_generator_data:
-    external: true
 services:
   nginx:
     container_name: nginx
@@ -16,8 +13,6 @@ services:
   front-end:
     container_name: front-end
     image: agray998/front-end:latest
-    volumes:
-      - event_generator_data:/app/application/data.db
     build: ./front-end
     environment:
       PASSWORD: ${MYSQL_ROOT_PASSWORD}
