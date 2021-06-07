@@ -32,5 +32,7 @@
     append: yes
 - name: "Install with pip"
   pip:
-    name: docker
+    name:
+      - docker
+      - jsondiff
     executable: pip3
