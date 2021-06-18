@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unit-api
+  spec:
+    selector:
+      app: unit-api
+    ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unit-api
+  labels:
+    app: unit-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unit-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: unit-api
+    spec:
+      containers:
+      - name: unit-api
+        image: agray998/unit-api:latest
+        ports:
+        - containerPort: 5000
