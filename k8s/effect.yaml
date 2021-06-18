@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: effect-api
+  spec:
+    selector:
+      app: effect-api
+    ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: effect-api
+  labels:
+    app: effect-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: effect-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: effect-api
+    spec:
+      containers:
+      - name: effect-api
+        image: agray998/effect-api:latest
+        ports:
+        - containerPort: 5000
