@@ -6,31 +6,66 @@ services:
     ports:
       - target: 80
         published: 80
+        protocol: tcp
     volumes:
       - type: bind
         source: ./nginx.conf
         target: /etc/nginx/nginx.conf
+    networks:
+      - events-net
+    depends_on:
+      - front-end
+  mysql:
+    container_name: mysql
+    image: agray998/event-gen-db:latest
+    build: ./events-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: eventsdb
+    volumes:
+      - type: volume
+        source: events-vol
+        target: /var/lib/mysql
+    networks:
+      - events-net
   front-end:
     container_name: front-end
     image: agray998/front-end:latest
     build: ./front-end
     environment:
-      PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - events-net
+    depends_on:
+      - mysql
+      - name-api
+      - unit-api
+      - effect-api
   name-api:
-    container_name: name-api
+    #container_name: name-api
     image: agray998/name-api:latest
     build: ./name-api
     deploy:
       replicas: 3
+    networks:
+      - events-net
   unit-api:
-    container_name: unit-api
+    #container_name: unit-api
     image: agray998/unit-api:latest
     build: ./unit-api
     deploy:
       replicas: 3
+    networks:
+      - events-net
   effect-api:
-    container_name: effect-api
+    #container_name: effect-api
     image: agray998/effect-api:latest
     build: ./effect-api
     deploy:
       replicas: 3
+    networks:
+      - events-net
+volumes:
+  events-vol:
+networks:
+  events-net:
