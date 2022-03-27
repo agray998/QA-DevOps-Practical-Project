@@ -6,7 +6,7 @@ from application import app
 client = TestClient(app)
 
 @patch('random.choice', return_value = "Ranged inf.")
-def test_get_name():
+def test_get_name(mock_func):
     response = client.get('/get_unit')
     assert response.status_code == 200
     assert response.text == 'Ranged inf.'

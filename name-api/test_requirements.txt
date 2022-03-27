@@ -1,2 +1,5 @@
 uvicorn[standard]
 fastapi
+pytest
+pytest-cov
+requests
