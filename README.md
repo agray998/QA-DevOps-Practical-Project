@@ -8,6 +8,7 @@ This repository contains my deliverable for the QA DevOps practical project.
 *  [CI/CD Pipeline](#CI/CD-Pipeline)
 *  [Known Issues](#Known-Issues)
 *  [Future Work](#Future-Work)
+*  [Updates](#Updates)
 
 ## Project Brief:  
 The brief for this project was to produce an application consisiting of four microservices, which interact with one another to generate objects using some defined logic. This application was to be produced and maintained using a fully automated CI/CD pipeline. The full tech stack required was as follows:  
@@ -103,4 +104,6 @@ The overall structure of the CI/CD pipeline is:
 The first future improvement would, as mentioned, be the use of a database which can persist data. The app could also be further improved in future sprints by using a locally hosted Nexus repository to speed up deployment, as the images would then not have to be fetched from Dockerhub, and by using another NGINX service as an external load balancer, to provide a single point of entry to the application.
 
 ## Updates:
-27-03-2022: updated requirements files to use correct versions of certain dependencies. Set up mysql database service to persist application data
+* 27-03-2022: 
+    * Updated requirements files to use correct versions of certain dependencies. Set up mysql database service to persist application data.  
+    * Re-wrote back-end services (name-api, unit-api and effect-api) using the fastAPI framework.
