@@ -1,8 +1,8 @@
 from application import app
-from flask import Flask, request, Response
 import random
+from fastapi.responses import PlainTextResponse
 
-@app.route('/get_name', methods=['GET'])
+@app.get('/get_name', response_class = PlainTextResponse)
 def name():
     event_name = random.choice(["Bountiful Harvest", "Gold Rush", "Weapons Upgrade"])
-    return Response(event_name, mimetype='text/plain')
+    return event_name
